@@ -3,4 +3,7 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  div(ng-app="home-wrecker", ng-controller="AppController as appController", layout="column")
+  a(ui-sref="main") main
+  a(ui-sref="main1") main 2
+  div(ng-app="home-wrecker", ng-controller="AppController as appController" layout="column")
+    main(ng-cloak, layout="column", layout-fill, ui-view)

@@ -4,7 +4,7 @@
 	// register the controller as MainController
 	angular
 		.module('home-wrecker')
-		.controller('MainController', function MainController() {
+		.controller('AppController', function AppController() {
 			var vm = this;
 		});
 
