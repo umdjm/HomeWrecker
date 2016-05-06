@@ -2,9 +2,11 @@
 <body>
     <video autoplay></video>
 
+		<a href="/auth/facebook" id="login-button" style="visibility:hidden">Log In!</a>
+		<a href="/api/logout" id="logout-button" style="visibility:hidden">Log Out!</a>
     <div style="text-align:center;">
         <video autoplay="">
-            <source src="big-buck-bunny_trailer.webm" type='video/webm; codecs="vp8, vorbis"'>
+            <source src="https://s3.amazonaws.com/homewrecker/video_4587772.webm" type='video/webm; codecs="vp8, vorbis"'>
         </video><br>
 
         <button id="rec" onclick="onBtnRecordClicked()">Record</button>
@@ -13,6 +15,20 @@
     </div>
     <p id="data"></p>
     <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href=""></a>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+		<script>
+
+				$(function(){
+					$.ajax({url: "/api/user", success: function(result){
+						document.getElementById("login-button").style.visibility = "hidden";
+						document.getElementById("logout-button").style.visibility = "visible";
+					}, error: function(request, status, error) {
+						document.getElementById("login-button").style.visibility = "visible";
+						document.getElementById("logout-button").style.visibility = "hidden";
+					}});
+				})
+		</script>
 
     <script>
         'use strict';
