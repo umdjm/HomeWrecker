@@ -3,13 +3,16 @@ var request = require('request');
 var express = require('express');
 var router = express.Router();
 
+var User = require('../models/user');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook');
 
 var config = require('rc')('divorce');
 
 passport.serializeUser(function(user, done) {
-	done(null, user);
+	var query = { facebookId: user.id };
+	var userData = {name: user.displayName, facebookId: user.id, photo: user.photos.length > 0 ? user.photos[0].value : ""};
+	User.findOneAndUpdate(query, userData, {'new': true, 'upsert': true}, done);
 });
 
 passport.deserializeUser(function(user, done) {
