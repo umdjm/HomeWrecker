@@ -53,10 +53,8 @@ router.get('/conflicts/:conflictId', function(req, res) {
 });
 
 router.post('/conflicts/:conflictId', isAuthenticated(), function(req, res) {
-	var obj = req.body;
-
 	if(req.user) {
-		Conflict.findByIdAndUpdate(req.param('conflictId'), { $set: obj}, function (err, conflict) {
+		Conflict.findByIdAndUpdate(req.param('conflictId'), { $set:  req.body}, {'new': true}, function (err, conflict) {
 			if (!err){
 				res.json(conflict);
 			} else {

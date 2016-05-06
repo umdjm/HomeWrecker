@@ -7,17 +7,15 @@ router.use(function(req, res, next){
 	next();
 });
 
-/* GET home page. */
 router.get('/user', function(req, res, next) {
 	if(req.user)
-		res.json(req.user)
+		res.json(req.user);
 	else
 		res
-			.status(403)
+			.status(401)
 			.json(
 				{"message":req.config.messages["auth.required"]}
 			)
-
 });
 
 router.get('/logout', function(req, res, next) {
@@ -26,7 +24,7 @@ router.get('/logout', function(req, res, next) {
 		res.redirect('/');
 	}else {
 		res
-			.status(403)
+			.status(401)
 			.json(
 				{"message": req.config.messages["auth.required"]}
 			)

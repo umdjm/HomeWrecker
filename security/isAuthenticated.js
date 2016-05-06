@@ -7,7 +7,7 @@ function isAjax(req) {
 
 module.exports = function(){
 	return function(req, res, next) {
-		if(req.session.authenticated) {
+		if(req.user) {
 			next();
 		}
 		else if(isAjax(req)) {
