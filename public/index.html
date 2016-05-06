@@ -2,9 +2,13 @@
 <body>
     <video autoplay></video>
 
-		<a href="/auth/facebook" id="login-button" style="visibility:hidden">Log In!</a>
-		<a href="/api/logout" id="logout-button" style="visibility:hidden">Log Out!</a>
-    <div style="text-align:center;">
+		<a href="/auth/facebook" id="login-button" style="display: none">Log In!</a>
+		<a href="/api/logout" id="logout-button" style="display: none">Log Out!</a>
+		<div style="display: inline">
+			<img id="facebook-image" src="">
+			<div id="facebook-name" style="display: inline"></div>
+		</div>
+		<div style="text-align:center;">
         <video autoplay="">
             <source src="https://s3.amazonaws.com/homewrecker/video_4587772.webm" type='video/webm; codecs="vp8, vorbis"'>
         </video><br>
@@ -21,11 +25,20 @@
 
 				$(function(){
 					$.ajax({url: "/api/user", success: function(result){
-						document.getElementById("login-button").style.visibility = "hidden";
-						document.getElementById("logout-button").style.visibility = "visible";
+						$("#login-button").hide();
+						$("#logout-button").show();
+						$("#facebook-image").show();
+						$("#facebook-name").show();
+
+						var displayImage = result["photos"][0]["value"];
+						$("#facebook-image").attr("src", displayImage);
+						var displayName = result["displayName"];
+						$("#facebook-name").html(displayName);
 					}, error: function(request, status, error) {
-						document.getElementById("login-button").style.visibility = "visible";
-						document.getElementById("logout-button").style.visibility = "hidden";
+						$("#login-button").show();
+						$("#logout-button").hide();
+						$("#facebook-image").hide();
+						$("#facebook-name").hide();
 					}});
 				})
 		</script>
