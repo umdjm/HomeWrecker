@@ -22,3 +22,6 @@ router.get('/facebook',
 router.get('/facebook/callback', function(req, res){
 	res.send(req.params);
 });
+
+
+module.exports = router;
