@@ -23,9 +23,7 @@ router.get('/conflicts', function(req, res) {
 	} else {
 		res
 			.status(403)
-			.json(
-				{"message": req.config.messages["auth.required"]}
-			)
+			.json({"message": req.config.messages["auth.required"]})
 	}
 });
 
@@ -46,9 +44,7 @@ router.post('/conflicts', function(req, res){
 	} else {
 		res
 			.status(403)
-			.json(
-				{"message":req.config.messages["auth.required"]}
-			)
+			.json({"message":req.config.messages["auth.required"]})
 	}
 
 });
