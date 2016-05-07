@@ -9,7 +9,18 @@
 			<div id="facebook-name" style="display: inline"></div>
 		</div>
 		<div style="text-align:center;">
-        <video autoplay="">
+			<FORM action="/api/vote" method="post">
+				<P>
+					<LABEL for="conflict">Conflict: </LABEL>
+					<INPUT type="text" id="conflict" name="conflict"><BR>
+					<LABEL for="side">Side: </LABEL>
+					<INPUT type="text" id="side" name="side"><BR>
+					<INPUT type="submit" value="Send">
+				</P>
+			</FORM>
+
+
+			<video autoplay="">
             <source src="https://s3.amazonaws.com/homewrecker/video_4587772.webm" type='video/webm; codecs="vp8, vorbis"'>
         </video><br>
 

@@ -1,9 +1,8 @@
 var mongoose = require('./db');
-
 var ObjectId = mongoose.Schema.ObjectId;
 
 var Side = new mongoose.Schema({
-	account: ObjectId,
+	user: ObjectId,
 	votes: Number,
 	videos: {
 		opening: String,
@@ -17,9 +16,7 @@ var Conflict = mongoose.model(
 	{
 		name: String,
 		description: String,
-		side1: Side,
-		side2: Side,
-		voters: [ObjectId]
+		sides: [Side]
 	}
 );
 
