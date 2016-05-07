@@ -6,17 +6,15 @@
 		.module('home-wrecker')
 		.config(function configMainRoute($stateProvider) {
 			var mainState = {
-				name: 'main',
-				url: '/',
-				templateUrl: '/home-wrecker/controllers/main/main.html',
-				controller: 'MainController',
+				name: 'conflict-edit',
+				url: '/conflict/new',
+				templateUrl: '/home-wrecker/controllers/conflict/edit.html',
+				controller: 'ConflictController',
 				asController: 'vm'
 			};
 
-			$stateProvider.state('main',mainState);
+			$stateProvider.state('conflict-edit',mainState);
 		})
 
 })();
-
-
 

@@ -1,9 +1,37 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  a(ui-sref="main") main
-  a(ui-sref="main1") main 2
-  div(ng-app="home-wrecker", ng-controller="AppController as appController" layout="column")
-    main(ng-cloak, layout="column", layout-fill, ui-view)
+  div(ng-app="home-wrecker", ng-controller="AppController as appController" layout="row")
+    md-sidenav.md-sidenav-left.md-whiteframe-z2(md-component-id='left', md-is-locked-open="$mdMedia('gt-md')")
+      md-toolbar.md-theme-indigo
+        md-button.md-primary
+          image(height='120px', width='120px', src='/images/icons/lipstick_lips_stick_cosmetics_makeup_fashion_beauty_product_accessories_glamour_flat_design_icon-512.png')
+        h1.md-toolbar-tools Home Wrecker
+      md-content(layout-padding='')
+        span#fb-root
+        script.
+          (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=429431873901184";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+
+        md-button.md-primary(ng-click='close()', hide-gt-md='')
+          | Close Sidenav Left
+        p(hide-md='', show-gt-md='')
+          | This sidenav is locked open on your device. To go back to the default behavior,
+          | narrow your display.
+
+    div(class="layout-padding layout-column", layout="column", flex)
+      md-toolbar.main-toolbar
+        .md-toolbar-tools
+          md-button(ng-show='appController.isAuthenticated()').md-icon-button(aria-label='Picture of me')
+            img(src="{{appController.user.photos[0].value}}")
+          span(ng-show='appController.isAuthenticated()') {{appController.user.displayName}}
+          span(flex)
+          md-button(ng-show='appController.isAuthenticated()').md-icon-button(aria-label='More')
+            ng-md-icon(icon='logout')
+      main(ng-cloak, layout="column", layout-fill, ui-view)
