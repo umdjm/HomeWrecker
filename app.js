@@ -5,6 +5,7 @@ var passport = require('passport');
 var config = require('rc')('divorce');
 var session = require('express-session');
 
+var index = require('./routes/index');
 var auth = require('./routes/auth');
 var user = require('./routes/api/user');
 var conflicts = require('./routes/api/conflict');
@@ -22,6 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: config.secret, name: 'homewrecker' }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/app', index);
 
 app.use('/conflict', conflict);
 

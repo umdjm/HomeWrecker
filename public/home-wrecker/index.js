@@ -3,7 +3,6 @@
 
 	angular
 		.module('home-wrecker', [
-			// Add modules below
 			'ngCookies',
 			'ngResource',
 			'ngSanitize',
@@ -12,18 +11,40 @@
 			'ui.router',
 			'home-wrecker.lodash',
 			'home-wrecker.io',
-			'home-wrecker.socket'
+			'home-wrecker.socket',
+			'ngMdIcons'
 		])
-		.config(appConfig);
+		.config(appConfig)
+		.run(function($rootScope) {
+			$rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams){
+				console.log('$stateChangeStart to '+toState.to+'- fired when the transition begins. toState,toParams : \n',toState, toParams);
+			});
+
+			$rootScope.$on('$stateChangeError',function(event, toState, toParams, fromState, fromParams){
+				console.log('$stateChangeError - fired when an error occurs during transition.');
+				console.log(arguments);
+			});
+
+			$rootScope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
+				console.log('$stateChangeSuccess to '+toState.name+'- fired once the state transition is complete.');
+			});
+
+			$rootScope.$on('$viewContentLoaded',function(event){
+				console.log('$viewContentLoaded - fired after dom rendered',event);
+			});
+
+			$rootScope.$on('$stateNotFound',function(event, unfoundState, fromState, fromParams){
+				console.log('$stateNotFound '+unfoundState.to+'  - fired when a state cannot be found by its name.');
+				console.log(unfoundState, fromState, fromParams);
+			});
+		});
 
 	/* App configuration */
 
 	// add appConfig dependencies to inject
-	appConfig.$inject = ['$controllerProvider', '$urlRouterProvider', '$urlMatcherFactoryProvider', '$locationProvider', '$mdThemingProvider', '$mdIconProvider', '$httpProvider'];
+	appConfig.$inject = ['$urlRouterProvider', '$urlMatcherFactoryProvider', '$locationProvider', '$mdThemingProvider', '$mdIconProvider', '$httpProvider'];
 
-	function appConfig($controllerProvider, $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider, $mdThemingProvider, $mdIconProvider, $httpProvider) {
-		$controllerProvider.allowGlobals();
-
+	function appConfig($urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider, $mdThemingProvider, $mdIconProvider, $httpProvider) {
 		$urlRouterProvider.otherwise('/');
 		$urlMatcherFactoryProvider.strictMode(false);
 		$locationProvider.html5Mode(true);
@@ -50,30 +71,6 @@
 		$mdIconProvider.iconSet('content', spritePath + 'svg-sprite-content.svg');
 		$mdIconProvider.iconSet('toggle', spritePath + 'svg-sprite-toggle.svg');
 		$mdIconProvider.iconSet('alert', spritePath + 'svg-sprite-alert.svg');
-
-		var $rootScope = angular.element(document.querySelectorAll("[ui-view]")[0]).injector().get('$rootScope');
-
-		$rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams){
-			console.log('$stateChangeStart to '+toState.to+'- fired when the transition begins. toState,toParams : \n',toState, toParams);
-		});
-
-		$rootScope.$on('$stateChangeError',function(event, toState, toParams, fromState, fromParams){
-			console.log('$stateChangeError - fired when an error occurs during transition.');
-			console.log(arguments);
-		});
-
-		$rootScope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
-			console.log('$stateChangeSuccess to '+toState.name+'- fired once the state transition is complete.');
-		});
-
-		$rootScope.$on('$viewContentLoaded',function(event){
-			console.log('$viewContentLoaded - fired after dom rendered',event);
-		});
-
-		$rootScope.$on('$stateNotFound',function(event, unfoundState, fromState, fromParams){
-			console.log('$stateNotFound '+unfoundState.to+'  - fired when a state cannot be found by its name.');
-			console.log(unfoundState, fromState, fromParams);
-		});
 	}
 
 	})();
