@@ -18,6 +18,19 @@ router.get('/user', function(req, res) {
 			)
 });
 
+router.get('/users', function(req, res) {
+	User.find({}, function(err, docs) {
+		if (!err){
+			res.json({'response': docs})
+		} else {
+			res
+				.status(403)
+				.json({"message": req.config.messages["user.list.failed"]})
+		}
+	});
+});
+
+
 router.get('/user/friends', function(req, res) {
 	res.json({'response': [
 		{'userName': 'Dj Martin'},
