@@ -1,14 +1,13 @@
 var express = require('express');
 var logout = require('express-passport-logout');
 var router = express.Router();
-var User = require('../../models/user');
 
 router.use(function(req, res, next){
 	req.config = req.app.get('config');
 	next();
 });
 
-router.get('/user', function(req, res, next) {
+router.get('/user', function(req, res) {
 	if(req.user)
 		res.json(req.user);
 	else
@@ -31,10 +30,19 @@ router.get('/users', function(req, res) {
 	});
 });
 
-router.get('/logout', function(req, res, next) {
+
+router.get('/user/friends', function(req, res) {
+	res.json({'response': [
+		{'userName': 'Dj Martin'},
+		{'userName': 'Mike Jeff'},
+		{'userName': 'Shovel Mahmujihad'}
+	]})
+});
+
+router.get('/logout', function(req, res) {
 	if(req.user) {
 		req.logout();
-		res.redirect('/');
+		res.redirect('/app');
 	}else {
 		res
 			.status(401)
