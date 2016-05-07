@@ -7,7 +7,7 @@ router.use(function(req, res, next){
 	next();
 });
 
-router.get('/user', function(req, res, next) {
+router.get('/user', function(req, res) {
 	if(req.user)
 		res.json(req.user);
 	else
@@ -18,10 +18,18 @@ router.get('/user', function(req, res, next) {
 			)
 });
 
-router.get('/logout', function(req, res, next) {
+router.get('/user/friends', function(req, res) {
+	res.json({'response': [
+		{'userName': 'Dj Martin'},
+		{'userName': 'Mike Jeff'},
+		{'userName': 'Shovel Mahmujihad'}
+	]})
+});
+
+router.get('/logout', function(req, res) {
 	if(req.user) {
 		req.logout();
-		res.redirect('/');
+		res.redirect('/app');
 	}else {
 		res
 			.status(401)

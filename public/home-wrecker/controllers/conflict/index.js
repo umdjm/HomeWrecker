@@ -10,7 +10,13 @@
 				url: '/conflict/new',
 				templateUrl: '/home-wrecker/controllers/conflict/edit.html',
 				controller: 'ConflictController',
-				asController: 'vm'
+				asController: 'conflict',
+				resolve: {
+					'friends': function(Friend){
+						return Friend.get()
+							.$promise;
+					}
+				}
 			};
 
 			$stateProvider.state('conflict-edit',mainState);
