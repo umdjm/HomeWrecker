@@ -10,6 +10,7 @@ var session = require('express-session');
 var index = require('./routes/index');
 var auth = require('./routes/auth');
 var user = require('./routes/api/user');
+var s3 = require('./routes/api/s3');
 var conflicts = require('./routes/api/conflict');
 var conflict = require('./routes/conflict');
 var votes = require('./routes/api/vote');
@@ -36,6 +37,7 @@ app.use('/auth', auth);
 app.use('/api', user);
 app.use('/api', conflicts);
 app.use('/api', votes);
+app.use('/api', s3);
 
 app.set('config', config);
 
