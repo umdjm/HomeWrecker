@@ -1,0 +1,17 @@
+{
+	"messages": {
+		"auth.required": "This method requires authorization.",
+		"conflict.create.failed": "Could not save conflict.",
+		"conflict.create.success": "Successfully created conflict.",
+		"conflict.list.failed": "Could not find conflicts.",
+		"conflict.update.failed": "Could not update conflict.",
+		"user.create.failed": "Could not save user.",
+		"user.create.success": "Successfully created user.",
+		"user.list.failed": "Could not find user.",
+		"vote.create.failed": "Could not save vote.",
+		"vote.create.success": "Successfully created vote.",
+		"vote.list.failed": "Could not find votes.",
+		"vote.update.failed": "Could not update vote.",
+		"vote.find.failed": "Could not find votes for Conflict."
+	}
+}
