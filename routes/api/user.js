@@ -33,9 +33,9 @@ router.get('/users', function(req, res) {
 
 router.get('/user/friends', function(req, res) {
 	res.json({'response': [
-		{'userName': 'Dj Martin'},
-		{'userName': 'Mike Jeff'},
-		{'userName': 'Shovel Mahmujihad'}
+		{'id':1, 'userName': 'Dj Martin'},
+		{'id':2, 'userName': 'Mike Jeff'},
+		{'id':3, 'userName': 'Shovel Mahmujihad'}
 	]})
 });
 

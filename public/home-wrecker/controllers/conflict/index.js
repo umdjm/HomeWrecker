@@ -10,7 +10,6 @@
 				url: '/conflict/new',
 				templateUrl: '/home-wrecker/controllers/conflict/edit.html',
 				controller: 'ConflictController',
-				asController: 'conflict',
 				resolve: {
 					'friends': function(Friend){
 						return Friend.get()
