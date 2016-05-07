@@ -10,6 +10,20 @@ router.use(function(req, res, next){
 });
 
 
+router.get('/votes', function(req, res) {
+	if(req.isAuthenticated()) {
+		var conditions = {user: req.user._id};
+		Vote.find(conditions, function (err, docs) {
+			if (!err) {
+				res.json(docs)
+			} else {
+				res
+					.status(403)
+					.json({"message": req.config.messages["votes.find.failed"]})
+			}
+		});
+	}
+});
 
 router.get('/votes/:conflictId', function(req, res) {
 	var conditions = {conflict: req.param('conflict')};
