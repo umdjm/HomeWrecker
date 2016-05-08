@@ -30,6 +30,7 @@
     </div>
     <p id="data"></p>
     <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href=""></a>
+		<a id="uploadLink" onclick="onUploadClicked()" href="#">Upload to Amazon</a>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 		<script>
@@ -40,11 +41,8 @@
 						$("#logout-button").show();
 						$("#facebook-image").show();
 						$("#facebook-name").show();
-
-						var displayImage = result["photos"][0]["value"];
-						$("#facebook-image").attr("src", displayImage);
-						var displayName = result["displayName"];
-						$("#facebook-name").html(displayName);
+						$("#facebook-image").attr("src", result.photo);
+						$("#facebook-name").html(result.name);
 					}, error: function(request, status, error) {
 						$("#login-button").show();
 						$("#logout-button").hide();
@@ -75,6 +73,7 @@
         var mediaRecorder;
         var chunks = [];
         var count = 0;
+				var blob;
 
         function startRecording(stream) {
             log('Start recording...');
@@ -117,7 +116,7 @@
             mediaRecorder.onstop = function(){
                 log('Stopped  & state = ' + mediaRecorder.state);
 
-                var blob = new Blob(chunks, {type: "video/webm"});
+                blob = new Blob(chunks, {type: "video/webm"});
                 chunks = [];
 
                 var videoURL = window.URL.createObjectURL(blob);
@@ -131,7 +130,7 @@
 
                 downloadLink.setAttribute( "download", name);
                 downloadLink.setAttribute( "name", name);
-
+								$("#uploadLink").show();
             };
 
             mediaRecorder.onpause = function(){
@@ -167,7 +166,31 @@
             stopBtn.disabled = true;
         }
 
-        function onPauseResumeClicked(){
+				function onUploadClicked(){
+					if(!blob)return;
+
+					$.ajax({url: "/api/sign", success: function(result){
+						var data = JSON.parse(result);
+
+						var xhr = new XMLHttpRequest();
+						xhr.open("PUT", data.signed_request);
+						xhr.setRequestHeader('x-amz-acl', 'public-read');
+						xhr.setRequestHeader('Content-Type', data.file_type);
+						xhr.onload = function () {
+							if (xhr.status === 200) {
+								console.log("Saved to:" + data.url);
+							}
+						};
+						xhr.send(blob);
+
+
+					}, error: function(request, status, error) {
+						console.log(error);
+					}});
+
+				}
+
+				function onPauseResumeClicked(){
 
             if(pauseResBtn.textContent === "Pause"){
 
